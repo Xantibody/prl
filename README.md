@@ -13,10 +13,10 @@ prl
 ### config
 ```toml
 [personal]
-  name="aizawa" -- your name
-  bersday="1990-01-01" --yyyy-mm-dd
+  name="aizawa" # your name
+  bersday="1990-01-01" # yyyy-mm-dd
 
 [setting]
-  avglife="80" -- average lifespan
-  dateformat="yyyy-mm-dd" -- output date format
+  avglife="80" # average lifespan
+  dateformat="yyyy-mm-dd" # output date format
 ```
