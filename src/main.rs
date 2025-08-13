@@ -1,3 +1,4 @@
+mod config;
 use chrono::{Datelike, NaiveDate};
 fn main() {
     let name = "aizawa";
