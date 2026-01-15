@@ -1,3 +1,4 @@
+mod config;
 mod entry;
 mod format;
 
