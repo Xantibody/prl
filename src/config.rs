@@ -19,7 +19,7 @@ impl Config {
     pub fn load() -> Result<Self, ConfigError> {
         let path = Self::config_path()?;
         let content = fs::read_to_string(&path).map_err(|_| ConfigError::NotFound)?;
-        Self::parse(&content)
+        Self::parse_str(&content)
     }
 
     pub fn config_path() -> Result<PathBuf, ConfigError> {
@@ -27,7 +27,7 @@ impl Config {
         Ok(config_dir.join("prl").join("config.toml"))
     }
 
-    fn parse(content: &str) -> Result<Self, ConfigError> {
+    pub fn parse_str(content: &str) -> Result<Self, ConfigError> {
         let raw: HashMap<String, RawEntry> =
             toml::from_str(content).map_err(|e| ConfigError::ParseError(e.to_string()))?;
 
@@ -92,7 +92,7 @@ date = "2025-03-15"
 [deadline]
 date = "2025-06-01"
 "#;
-        let config = Config::parse(toml).unwrap();
+        let config = Config::parse_str(toml).unwrap();
         assert_eq!(config.entries.len(), 2);
         assert!(config.get("birthday").is_some());
         assert!(config.get("deadline").is_some());
@@ -104,7 +104,7 @@ date = "2025-06-01"
 [event]
 date = "invalid"
 "#;
-        let result = Config::parse(toml);
+        let result = Config::parse_str(toml);
         assert!(matches!(result, Err(ConfigError::InvalidDate(_, _))));
     }
 
@@ -114,7 +114,7 @@ date = "invalid"
 [birthday]
 date = "2025-03-15"
 "#;
-        let config = Config::parse(toml).unwrap();
+        let config = Config::parse_str(toml).unwrap();
         assert!(config.get("nonexistent").is_none());
     }
 }
